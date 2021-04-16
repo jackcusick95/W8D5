@@ -54,10 +54,22 @@ function askIfGreaterThan(el1, el2, callback) {
 function innerBubbleSortLoop(arr, i, madeAnySwaps, outerBubbleSortLoop) {
     if (i == arr.length - 1) {
         outerBubbleSortLoop();
-    } else {
+    } 
+
+    if (i < arr.length - 1) {
         askIfGreaterThan(arr[i], arr[i + 1], callback);
-        
+        const isGreaterThan = function () {
+            callback === true ? true : false;
+        }
+    if (!isGreaterThan) {
+        arr[i], arr[i + 1] = arr[i]+1, arr[i];
+        madeAnySwaps = true;
     }
+    innerBubbleSortLoop(arr, i+1, madeAnySwaps);
+    }
+
+        
+
     // Do an "async loop":
     // 1. If (i == arr.length - 1), call outerBubbleSortLoop, letting it
     //    know whether any swap was made.
