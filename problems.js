@@ -2,7 +2,8 @@ const readline = require('readline');
 
 const rl = readline.createInterface({
     input: process.stdin,
-    output: process.stdout
+    output: process.stdout,
+    terminal: false 
 });
 
 // rl.question("What do you think of node.js?", function (answer) {
@@ -11,12 +12,26 @@ const rl = readline.createInterface({
 // });
 
 function addNumbers(sum, numsLeft, completionCallback) {
-    if (numsLeft > 0) {
-        const number = rl.question('Give me a number!!!', function(answer) {
-            const conNum = parseInt(answer);
-            console.log(`you added number: ${number}`);
-            rl.close();
-        });
+    if (numsLeft === 0) {
+        completionCallback(sum);
+            // rl.question('Give me a number!!!', function(answer) {
+            // const conNum = parseInt(answer);
+            // sum += conNum;
+            // console.log(`your sum is: ${sum}`);
+
+            // rl.close();
+        // });
     }
+        rl.question('Give me a number!!!', function (answer) {
+        const conNum = parseInt(answer);
+        sum += conNum;
+        // console.log(`your sum is: ${sum}`);
+        completionCallback(sum);
+
+        numsLeft -= 1;
+        addNumbers(sum, numsLeft, completionCallback);
+        rl.close();
+    });
 }
 
+addNumbers(0, 3, sum => console.log(`Total Sum: ${sum}`));
